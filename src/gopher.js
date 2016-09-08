@@ -15,7 +15,9 @@
  **/
 
 (function(global, name, definition){
-    global[name] = definition(global, name);
+    if (typeof module !== 'undefined') module.exports = definition(global, name);
+    else if (typeof define === 'function' && typeof define.amd  === 'object') define(definition);
+    else global[name] = definition(global, name);
 })(this, 'gopher', function(global, name){
 
     "use strict";
