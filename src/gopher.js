@@ -22,12 +22,17 @@
 
     "use strict";
 
+    var gopherNoTopic = {};
+
     /**
      * Set the current topic for the broadcast/subscription.
      * @param string topic
      **/
     function gopher(topic){
-        gopher.module.setTopic(topic);
+        if(typeof(topic) != "string" || topic==""){
+            return undefined;
+        }
+        gopher.module._setTopic(topic);
         return gopher.module;
     }
 
@@ -41,7 +46,7 @@
          *
          * @param string topic
          */
-        setTopic: function(topic){
+        _setTopic: function(topic){
             if(!this.topics.hasOwnProperty(topic)){
                 this.topics[topic] = [];
             }
@@ -64,9 +69,11 @@
          * @param string/object payload
          **/
         broadcast: function(payload){
-            this.topics[this.current_topic].forEach(function(callback){
-                callback(payload);
-            });
+            if(this.topics.hasOwnProperty(this.current_topic)){
+                this.topics[this.current_topic].forEach(function(callback){
+                    callback(payload);
+                });
+            }
             return this;
         },
 
