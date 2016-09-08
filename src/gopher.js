@@ -14,59 +14,73 @@
  *
  **/
 
-"use strict";
+(function(global, name, definition){
+    global[name] = definition(global, name);
+})(this, 'gopher', function(global, name){
 
-var gopher = (function(){
-
-    gopher = {
-        topics:{}
-    }
+    "use strict";
 
     /**
-     * Subscribe to a topic. 
-     *
+     * Set the current topic for the broadcast/subscription.
      * @param string topic
-     * @param function callback
      **/
-    gopher.subscribe = function(topic, callback){
-        if(gopher.topics.hasOwnProperty(topic)){
-            gopher.topics[topic].push(callback);
-        } else {
-            gopher.topics[topic] = [callback];
-        }
+    function gopher(topic){
+        gopher.module.setTopic(topic);
+        return gopher.module;
     }
 
-    /**
-     * Broadcast/publish to a topic.
-     * 
-     * @param string topic
-     * @param string/object payload
-     **/
-    gopher.broadcast = function(topic, payload){
-        if(!gopher.topics.hasOwnProperty(topic)){
-            return undefined;
+    gopher.module = {
+        topics:{},
+        current_topic:"",
+
+        /**
+         * Create a topic if it doesn't exist.
+         * Set the current topic.
+         *
+         * @param string topic
+         */
+        setTopic: function(topic){
+            if(!this.topics.hasOwnProperty(topic)){
+                this.topics[topic] = [];
+            }
+            this.current_topic = topic;
+        },
+
+        /**
+         * Subscribe to a topic. 
+         *
+         * @param function callback
+         **/
+        subscribe: function(callback){
+            this.topics[this.current_topic].push(callback);
+            return this;
+        },
+
+        /**
+         * Broadcast/publish to a topic.
+         * 
+         * @param string/object payload
+         **/
+        broadcast: function(payload){
+            this.topics[this.current_topic].forEach(function(callback){
+                callback(payload);
+            });
+            return this;
+        },
+
+        /**
+         * Unsubscribe from a topic.
+         * 
+         * @param function callback
+         **/
+        unsubscribe: function(callback){
+            var ind = this.topics[this.current_topic].indexOf(callback);
+            if(ind > -1){
+                this.topics[this.current_topic].splice(ind,1);
+            }
+            return this;
         }
+    };
 
-        gopher.topics[topic].forEach(function(callback){
-            callback(payload);
-        });
-    }
-
-    /**
-     * Unsubscribe from a topic.
-     * 
-     * @param string topic
-     * @param function callback
-     **/
-    gopher.unsubscribe = function(topic, callback){
-        if(!gopher.topics.hasOwnProperty(topic)){
-            return undefined;
-        }
-
-        var ind = gopher.topics[topic].indexOf(callback)
-        gopher.topics[topic].splice(ind,1);
-    }
-    
     return gopher;
-
-}())
+});
