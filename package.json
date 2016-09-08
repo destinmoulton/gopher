@@ -1,0 +1,15 @@
+{
+  "name": "gopher",
+  "version": "0.0.2",
+  "description": "A pub/sub message/package broadcast system.",
+  "main": "src/gopher.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "author": "Destin Moulton",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
+  }
+}
