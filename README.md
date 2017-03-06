@@ -38,10 +38,6 @@ console.log(messages);
 // >>> [ 'Message one.', 'Message two.' ]
 ```
 
-### Requirements
-***
-JavaScript
-
 ### License
 ***
 gopher is released under the MIT license.
