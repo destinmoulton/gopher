@@ -60,7 +60,7 @@ describe("gopher pub/sub", function(){
         });
     });
     describe("subscribe a single function and broadcast", function(){
-        it("an objects", function(){
+        it("an object", function(){
             var CHANNEL = "test";
             var complete_package = {};
             gopher(CHANNEL).subscribe(function(packobj){
@@ -84,9 +84,7 @@ describe("gopher pub/sub", function(){
             gopher(CHANNEL).broadcast("hello");
             
             expect(complete_message).to.equal("helloworld");
-
         });
-
     });
 
     describe("subscribe multiple functions and broadcast", function(){
@@ -112,7 +110,4 @@ describe("gopher pub/sub", function(){
             expect(gamma_message).to.equal("aristotle");
         });
     });
-
-    
-    
 });
