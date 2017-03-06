@@ -1,9 +1,9 @@
 var expect = require("chai").expect;
 var gopher = require("../src/gopher.js");
 
-describe("gopher is a pub/sub message/package broadcast system", function(){
-    describe("Subscribe and broadcast on single function", function(){
-        it("Subscribes a function and broadcasts an *object* to that function", function(){
+describe("gopher pub/sub", function(){
+    describe("subscribe a single function and broadcast", function(){
+        it("an objects", function(){
 
             var complete_package = {};
             gopher("test").subscribe(function(packobj){
@@ -17,7 +17,7 @@ describe("gopher is a pub/sub message/package broadcast system", function(){
             expect(complete_package["packobj"]["foo"]).to.equal("bar");
 
         });
-        it("Subscribes a function and broadcasts a *string* to that function", function(){
+        it("a string", function(){
 
             var complete_message = "";
             gopher("test").subscribe(function(message){
@@ -32,8 +32,8 @@ describe("gopher is a pub/sub message/package broadcast system", function(){
 
     });
 
-    describe("Subscribe and broadcast on multiple functions", function(){
-        it("Subscribes three functions and broadcasts to them", function(){
+    describe("subscribe multiple functions and broadcast", function(){
+        it("a string to them", function(){
             var alpha_message = "";
             var alpha = function(message){ alpha_message += message; }
 
@@ -55,8 +55,8 @@ describe("gopher is a pub/sub message/package broadcast system", function(){
         });
     });
 
-    describe("Unsubscribe subscribed function", function(){
-        it("Performs a subscription & broadcast on a *single* function and then unsubscribes that function", function(){
+    describe("subscribes", function(){
+        it("a single function and unsubscribes that function", function(){
             var complete_package = {};
             var funtest = function(packobj){
                 complete_package["packobj"] = packobj;
@@ -76,7 +76,7 @@ describe("gopher is a pub/sub message/package broadcast system", function(){
             expect(complete_package["packobj"]).to.not.have.property("happy");
         });
 
-        it("Subscribes *multiple* functions and then unsubscribes a *single* function", function(){
+        it("multiple functions and then unsubscribes a single function", function(){
             var alpha_var = "";
             var alpha = function(message){
                 alpha_var += message;
@@ -103,13 +103,13 @@ describe("gopher is a pub/sub message/package broadcast system", function(){
         });
     });
 
-    describe("Test no topic (ie when gopher is called as gopher())", function(){
-        it("Calls gopher with no topic (expected undefined)", function(){
-            var alpha_var = "";
-            var alpha = function(message){
-                alpha_var += message;
-            }
-            expect(gopher()).to.equal(undefined);
-        });
+    
+    it("undefined when called directly with no parameter", function(){
+        var alpha_var = "";
+        var alpha = function(message){
+            alpha_var += message;
+        }
+        expect(gopher()).to.equal(undefined);
     });
+    
 });
