@@ -14,6 +14,10 @@ gopher("notification").subscribe(storeMessage);
 
 gopher("notification").broadcast("Message one.");
 gopher("notification").broadcast("Message two.");
+
+gopher("notification").unsubscribe(outputToConsole);
+
+gopher("notification").broadcast("Message three.");
 console.log(messages);
 
 // Message one.
