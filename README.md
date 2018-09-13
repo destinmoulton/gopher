@@ -1,26 +1,32 @@
 ### What is gopher?
-***
+
+---
+
 Gopher is a simple JavaScript pub/sub broadcast system.
 
 Gopher works with node (CommonJS), RequireJS, and in the browser.
 
 ### Usage
-***
+
+---
+
 Using gopher is simple.
+
 ```js
-gopher("topic-name").subscribe(callback)
-gopher("topic-name").broadcast(message)
-gopher("topic-name").unsubscribe(callback)
+gopher("topic-name").subscribe(callback);
+gopher("topic-name").broadcast(message);
+gopher("topic-name").unsubscribe(callback);
 ```
 
 Example
+
 ```js
-function outputToConsole(message){
+function outputToConsole(message) {
     console.log(message);
 }
 
 var messages = [];
-function storeMessage(message){
+function storeMessage(message) {
     messages.push(message);
 }
 
@@ -39,5 +45,5 @@ console.log(messages);
 ```
 
 ### License
-***
-gopher is released under the MIT license.
+
+MIT
